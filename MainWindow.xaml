@@ -1,0 +1,65 @@
+﻿<Window x:Class="BgmDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BgmDesktop"
+        mc:Ignorable="d"
+        Title="Bangumi Gal" Height="450" Width="800" WindowStyle="None" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid TextElement.Foreground="#c6c6c6" TextElement.FontSize="13" Background="#2d2e2f">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#3f3f3f" MouseLeftButtonDown="TitleClick" >
+            <Image Source="Resourse/image/UI/icon32.png" Width="32" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,2,2,2" />
+            <TextBlock Text="Bangumi Gal v0.01" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="42,-2,0,0" FontFamily="MyFont, Pescadero, Microsoft Yahei, sans-serif"/>
+            <Button Style="{StaticResource TransparentButton}" HorizontalAlignment="Right" Background="Transparent" Width="30" MouseEnter="ButtonIn" MouseLeave="ButtonOut" Click="WindowClose">
+                <Image Source="Resourse/image/UI/close.png" Margin="7"/>
+            </Button>
+            <Button Name="WindowControlButton" Style="{StaticResource TransparentButton}" HorizontalAlignment="Right" Background="Transparent" Width="30" MouseEnter="ButtonIn" MouseLeave="ButtonOut" Click="WindowLarge" Margin="0,0,30,0">
+                <Grid>
+                    <Image Name="WindowLargeImage" Source="Resourse/image/UI/large.png" Margin="7"/>
+                    <Image Name="WindowNormalImage" Source="Resourse/image/UI/normal.png" Margin="7" Visibility="Hidden"/>
+                </Grid>
+            </Button>
+            <Button Style="{StaticResource TransparentButton}" HorizontalAlignment="Right" Background="Transparent" Width="30" MouseEnter="ButtonIn" MouseLeave="ButtonOut" Click="WindowSmall" Margin="0,0,60,0">
+                <Image Source="Resourse/image/UI/small.png" Margin="7"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Background="#353738">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Button Name="HomeButton" Style="{StaticResource TransparentButton}" Click="GoHome" Background="Transparent" BorderThickness="0" Margin="0,0,0,2" Width="50" Height="38">
+                <Label Foreground="#c6c6c6" Content="首页" FontFamily="Pescadero, Microsoft Yahei, sans-serif" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" MouseEnter="LableIn" MouseLeave="LableOut"/>
+            </Button>
+            <Button Style="{StaticResource TransparentButton}" Click="GoRating" Background="Transparent" BorderThickness="0" Margin="50,0,0,2" Width="70" Height="38" >
+                <Label Foreground="#c6c6c6" Content="排行榜" FontFamily="Pescadero, Microsoft Yahei, sans-serif" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" MouseEnter="LableIn" MouseLeave="LableOut"/>
+            </Button>
+            <Button Style="{StaticResource TransparentButton}" Click="GoSelf" VerticalAlignment="Center" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Margin="0,0,10,2" Height="38" Width="38">
+                <!--<Image Source="Resourse/image/icon_default.png" />-->
+            </Button>
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2">
+            <Grid Name="HomeGrid" Background="#2d2e2f">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Name="UserListGrid"></Grid>
+                <Grid Grid.Row="1">
+                    <Button Name="AddButton" Style="{StaticResource TransparentButton}" Click="MakeUser" Background="#3f3f3f" BorderThickness="0" Width="50" Height="38" HorizontalAlignment="Center" Margin="0,0,60,0">
+                        <Label Foreground="#c6c6c6" Content="添加" FontFamily="Pescadero, Microsoft Yahei, sans-serif" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" MouseEnter="LableIn" MouseLeave="LableOut"/>
+                    </Button>
+                    <Button Name="CheckButton" Style="{StaticResource TransparentButton}" Click="Check" Background="#3f3f3f" BorderThickness="0" Width="50" Height="38" HorizontalAlignment="Center" Margin="60,0,0,0">
+                        <Label Foreground="#c6c6c6" Content="查询" FontFamily="Pescadero, Microsoft Yahei, sans-serif" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" MouseEnter="LableIn" MouseLeave="LableOut"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="2" Name="AnsArea" />
+                <Label Grid.Row="3" Name="shower"></Label>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>

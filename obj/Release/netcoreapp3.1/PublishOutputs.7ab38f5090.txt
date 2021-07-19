@@ -1,0 +1,5 @@
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\publish\BangumiGal.exe
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\publish\BangumiGal.dll
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\publish\BangumiGal.deps.json
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\publish\BangumiGal.runtimeconfig.json
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\publish\BangumiGal.pdb

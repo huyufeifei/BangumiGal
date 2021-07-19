@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon64.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyName>BangumiGal</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resourse\alternative4.png" />
+    <None Remove="Resourse\font\LiYa_0.ttf" />
+    <None Remove="Resourse\image\icon_default.png" />
+    <None Remove="Resourse\image\UI\close.png" />
+    <None Remove="Resourse\image\UI\delete.png" />
+    <None Remove="Resourse\image\UI\icon16.png" />
+    <None Remove="Resourse\image\UI\icon32.png" />
+    <None Remove="Resourse\image\UI\icon64.ico" />
+    <None Remove="Resourse\image\UI\icon64.png" />
+    <None Remove="Resourse\image\UI\large.png" />
+    <None Remove="Resourse\image\UI\normal.png" />
+    <None Remove="Resourse\image\UI\small.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resourse\font\LiYa_0.ttf" />
+    <Resource Include="Resourse\image\icon_default.png" />
+    <Resource Include="Resourse\image\UI\close.png" />
+    <Resource Include="Resourse\image\UI\delete.png" />
+    <Resource Include="Resourse\image\UI\icon16.png" />
+    <Resource Include="Resourse\image\UI\icon32.png" />
+    <Resource Include="Resourse\image\UI\icon64.ico" />
+    <Resource Include="Resourse\image\UI\icon64.png" />
+    <Resource Include="Resourse\image\UI\large.png" />
+    <Resource Include="Resourse\image\UI\normal.png" />
+    <Resource Include="Resourse\image\UI\small.png" />
+  </ItemGroup>
+
+</Project>

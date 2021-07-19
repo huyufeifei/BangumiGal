@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zJb7vsuY5hSsqrcH9QHekuRwwSJS28BpdcOx7B/6EePThm2A4a5MqxIdgB5M5nGVDzsrYmU/AmIvsHaXeYLoQw==",
+  "success": true,
+  "projectFilePath": "E:\\work\\vs project\\BgmDesktop\\BgmDesktop.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NH55\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

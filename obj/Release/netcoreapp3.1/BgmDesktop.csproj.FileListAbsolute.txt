@@ -18,3 +18,5 @@ E:\work\vs project\BgmDesktop\obj\Release\netcoreapp3.1\BangumiGal_MarkupCompile
 E:\work\vs project\BgmDesktop\obj\Release\netcoreapp3.1\BangumiGal.g.resources
 E:\work\vs project\BgmDesktop\obj\Release\netcoreapp3.1\BangumiGal.dll
 E:\work\vs project\BgmDesktop\obj\Release\netcoreapp3.1\BangumiGal.pdb
+E:\work\vs project\BgmDesktop\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
+E:\work\vs project\BgmDesktop\obj\Release\netcoreapp3.1\BgmDesktop.csproj.CopyComplete

@@ -17,6 +17,21 @@ using System.Net;
 using System.IO;
 
 namespace BgmDesktop {
+
+    public class Game {
+        public int id, userCount;
+        public string name, nameCN;
+        public bool del;
+        private Game() { }
+        public Game(int Id, string Name, string NameCN) {
+            id = Id;
+            name = Name;
+            nameCN = NameCN;
+            del = false;
+            userCount = 0;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -184,10 +199,11 @@ namespace BgmDesktop {
         private void MakeUser(object sender, RoutedEventArgs e) {
             // make new textbox
             TextBox tb = new TextBox();
-            tb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+            tb.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#353738"));
+            //tb.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
 
             // make new checkbox
-            CheckBox cb = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
+            CheckBox cb = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, IsChecked = true};
 
             // make new button
             Button btn = new Button() { Height = 15, Width = 15 };
@@ -197,6 +213,10 @@ namespace BgmDesktop {
 
             // make new grid
             Grid target = new Grid() { Width = 120, Height = 20 };
+            Thickness margin = target.Margin;
+            margin.Top = 3;
+            margin.Bottom = 3;
+            target.Margin = margin;
             target.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             target.ColumnDefinitions.Add(new ColumnDefinition());
             target.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
@@ -231,34 +251,107 @@ namespace BgmDesktop {
         }
 
         private string GetUrl(string url) {
+            string ans = null;
             WebRequest require = WebRequest.Create(url);
             require.Method = "GET";
             require.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0");
             require.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             require.Headers.Add("Accept-Language", "en,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.5,zh-HK;q=0.3,en-US;q=0.2");
-            //require.Headers.Add("Accept-Encoding", "gzip, deflate, br");
-            WebResponse response = require.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            string ans = reader.ReadToEnd();
-            reader.Close();
-            response.Close();
+            try {
+                WebResponse response = require.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                ans = reader.ReadToEnd();
+                reader.Close();
+                response.Close();
+            }
+            catch { }
             //Byte[] temp = Encoding.Default.GetBytes(ans);
             //ans = Encoding.UTF8.GetString(temp);
             return ans;
         }
 
+        private int ToNumber(string s) {
+            int ans = 0;
+            foreach(char c in s) {
+                ans = ans * 10 + (c - '0');
+            }
+            return ans;
+        }
+
         private void Check(object sender, RoutedEventArgs e) {
-            string str = "";
+            Dictionary<int, Game> dict = new Dictionary<int, Game>();
+            int rightUserCount = 0, playUserCount = 0;
             for(int i = 0; i < UserListGrid.Children.Count; i++) {
                 Grid child = (Grid)VisualTreeHelper.GetChild(UserListGrid, i);
                 TextBox tb = (TextBox)VisualTreeHelper.GetChild(child, 1);
                 string userName = tb.Text;
-                str = str + GetUrl(api + "game/list/" + userName + "/collect") + "\n";
-                CheckBox cb = (CheckBox)VisualTreeHelper.GetChild(child, 0);
+                string html = GetUrl(api + "game/list/" + userName + "/collect");
+                if (html == null || html.Contains("<h2>呜咕，出错了</h2>")) {
+                    tb.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ee5f5f"));
+                }
+                else {
+                    tb.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#353738"));
+                    ++rightUserCount;
+                    CheckBox cb = (CheckBox)VisualTreeHelper.GetChild(child, 0);
+                    bool isPlay = (bool)cb.IsChecked;
+                    if(isPlay) {
+                        playUserCount++;
+                    }
+                    // work on string
+                    bool haveNextPage = true;
+                    int nowPage = 1;
+                    while (haveNextPage) {
+                        haveNextPage = html.Contains("&rsaquo;&rsaquo;");
+                        while (html.Contains("<h3>")) {
+                            int pos = html.IndexOf("<h3>") + 23;
+                            int pos2 = html.IndexOf("\"", pos);
+                            int id = ToNumber(html.Substring(pos, pos2 - pos));
+                            if(!dict.ContainsKey(id)) {
+                                pos = html.IndexOf(">", pos2) + 1;
+                                pos2 = html.IndexOf("<", pos);
+                                string namecn = html.Substring(pos, pos2 - pos);
+                                string name = "";
+                                if (html.IndexOf("small", pos2) == pos2 + 6) {
+                                    pos = pos2 + 25;
+                                    pos2 = html.IndexOf("<", pos);
+                                    name = html.Substring(pos, pos2 - pos);
+                                }
+                                else {
+                                    name = namecn;
+                                    namecn = "";
+                                }
+                                dict.Add(id, new Game(id, name, namecn));
+                            }
+                            if(isPlay) {
+                                dict[id].userCount++;
+                            }
+                            else {
+                                dict[id].del = true;
+                            }
+                            html = html.Substring(pos2);
+                        }
+                        if(haveNextPage) {
+                            ++nowPage;
+                            html = GetUrl(api + "game/list/" + userName + "/collect?page=" + nowPage.ToString());
+                        }
+                    }
+                }
             }
             AnsArea.Children.Clear();
-            AnsArea.Children.Add(new Label() { Content = str });
+            int ansCount = 0;
+            string ans = "";
+            foreach(Game game in dict.Values) {
+                if(game.del == false && game.userCount == playUserCount) {
+                    ++ansCount;
+                    ans += ansCount.ToString() + ":\n" + game.name + "\n";
+                    if(game.nameCN != "") {
+                        ans += game.nameCN + "\n";
+                    }
+                    ans += "\n";
+                }
+            }
+            AnsArea.Children.Add(new Label() { Content = "总数：" + ansCount.ToString() + "\n\n" + ans });
         }
     }
 }

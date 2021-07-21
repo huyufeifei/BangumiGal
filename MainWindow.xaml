@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#3f3f3f" MouseLeftButtonDown="TitleClick" >
             <Image Source="Resourse/image/UI/icon32.png" Width="32" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,2,2,2" />
-            <TextBlock Text="Bangumi Gal v0.01" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="42,-2,0,0" FontFamily="MyFont, Pescadero, Microsoft Yahei, sans-serif"/>
+            <TextBlock Text="Bangumi Gal v0.1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="42,-2,0,0" FontFamily="MyFont, Pescadero, Microsoft Yahei, sans-serif"/>
             <Button Style="{StaticResource TransparentButton}" HorizontalAlignment="Right" Background="Transparent" Width="30" MouseEnter="ButtonIn" MouseLeave="ButtonOut" Click="WindowClose">
                 <Image Source="Resourse/image/UI/close.png" Margin="7"/>
             </Button>
